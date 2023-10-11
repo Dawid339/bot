@@ -1,0 +1,38 @@
+import discord
+from discord.ext import commands
+
+# Переменная intents - хранит привилегии бота
+intents = discord.Intents.default()
+# Включаем привелегию на чтение сообщений
+intents.message_content = True
+# Создаем бота в переменной client и передаем все привелегии
+bot = commands.Bot(command_prefix='/', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def Привет(ctx):
+    await ctx.send(f'Привет! Я бот {bot.user}')
+
+@bot.command()
+async def Пока (ctx):
+    await ctx.send(f'Пока, удачи тебе!')
+
+@bot.group()
+async def крутой(ctx):
+    """Says if a user is cool.
+
+    In reality this just checks if a subcommand is being invoked.
+    """
+    if ctx.invoked_subcommand is None:
+        await ctx.send(f'Нет, {ctx.subcommand_passed} не крутой!')
+
+
+@крутой.command(name='бот')
+async def _bot(ctx):
+    """Бот крутой?"""
+    await ctx.send('Да, Бот крутой.')
+
+bot.run("MTE1NzAxMTM2NDA5MTUzMTM2NA.G1nT9M.SoscHBl3HoGv1shwcXpVvq83rWOan4RZ5JbwQc")
