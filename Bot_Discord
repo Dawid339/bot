@@ -1,4 +1,5 @@
 import discord
+import request
 from discord.ext import commands
 
 # Переменная intents - хранит привилегии бота
@@ -34,5 +35,34 @@ async def крутой(ctx):
 async def _bot(ctx):
     """Бот крутой?"""
     await ctx.send('Да, Бот крутой.')
+
+@bot.command()
+async def mem(ctx):
+    with open('images/mem1.jpg', 'rb') as f:
+        # В переменную кладем файл, который преобразуется в файл библиотеки Discord!
+        picture = discord.File(f)
+   # Можем передавать файл как параметр!
+    await ctx.send(file=picture)
+
+@bot.command()
+async def animals(ctx):
+    with open('memewithanimals/mem4.jpg', 'rb') as f:
+        # В переменную кладем файл, который преобразуется в файл библиотеки Discord!
+        picture = discord.File(f)
+   # Можем передавать файл как параметр!
+    await ctx.send(file=picture)
+
+def get_duck_image_url():    
+    url = 'https://random-d.uk/api/random'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('duck')
+async def duck(ctx):
+    '''По команде duck вызывает функцию get_duck_image_url'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
 
 bot.run("MTE1NzAxMTM2NDA5MTUzMTM2NA.G1nT9M.SoscHBl3HoGv1shwcXpVvq83rWOan4RZ5JbwQc")
